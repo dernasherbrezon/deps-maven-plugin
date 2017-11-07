@@ -4,9 +4,6 @@
 #   1) Directory with repositories.txt and dependencies.txt files
 #   2) Directory where to output downloaded dependencies
 
-set -e
-set -o pipefail
-
 if [ ! -f $1/repositories.txt ]; then
 	echo "$1/repositories.txt doens't exist"
 	exit 1;
@@ -59,11 +56,10 @@ do
 	else
 		echo "dependency already downloaded: $filename"
 	fi
-	expectedFilenames+=(filename)
+	expectedFilenames+=(${filename})
 done
 
-//FIXME
-while read -r line; do
-    echo "delete unexpected: $2/$line"
-    rm $2/$line
-done <<< `comm -23  <(ls $2/*.jar | sort) <(printf '%s\n' "${expectedFilenames[@]}" | sort)`
+comm -23  <(ls $2/*.jar | sort) <(printf '%s\n' "${expectedFilenames[@]}" | sort) | while read -r line; do
+	echo "delete unexpected: $2/$line"
+	rm $2/$line
+done 
