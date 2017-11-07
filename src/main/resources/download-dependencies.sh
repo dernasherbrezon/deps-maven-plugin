@@ -60,6 +60,6 @@ do
 done
 
 comm -23  <(ls $2/*.jar | sort) <(printf '%s\n' "${expectedFilenames[@]}" | sort) | while read -r line; do
-	echo "delete unexpected: $2/$line"
-	rm $2/$line
+	echo "delete unexpected: $line"
+	rm $line
 done 
