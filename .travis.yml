@@ -1,0 +1,13 @@
+language: java
+bundler_args: --retry 1
+
+cache:
+  directories:
+  - $HOME/.m2
+
+before_cache:
+  - rm -rf $HOME/.m2/repository/com/aerse/
+  
+script:
+  - mvn test -B
+  - ./src/test/bash/bash_unit.sh ./src/test/bash/test_core.sh
