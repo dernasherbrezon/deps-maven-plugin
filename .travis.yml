@@ -11,3 +11,4 @@ before_cache:
 script:
   - mvn test -B
   - ./src/test/bash/bash_unit.sh ./src/test/bash/test_core.sh
+
