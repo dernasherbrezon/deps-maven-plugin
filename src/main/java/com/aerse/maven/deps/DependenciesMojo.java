@@ -41,6 +41,7 @@ public class DependenciesMojo extends AbstractMojo {
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		File repositoriesFile = new File(repositories);
 		setupParentDirectory(repositoriesFile);
+		getLog().info("writing: " + repositoriesFile.getAbsolutePath());
 		try (BufferedWriter w = new BufferedWriter(new FileWriter(repositoriesFile))) {
 			for (ArtifactRepository cur : project.getRemoteArtifactRepositories()) {
 				String url = cur.getUrl();
@@ -52,9 +53,10 @@ public class DependenciesMojo extends AbstractMojo {
 		} catch (Exception e) {
 			throw new MojoExecutionException("unable to write repositories to: " + repositoriesFile.getAbsolutePath(), e);
 		}
-		File dependensiesFile = new File(dependencies);
-		setupParentDirectory(dependensiesFile);
-		try (BufferedWriter w = new BufferedWriter(new FileWriter(dependensiesFile))) {
+		File dependenciesFile = new File(dependencies);
+		setupParentDirectory(dependenciesFile);
+		getLog().info("writing: " + dependenciesFile.getAbsolutePath());
+		try (BufferedWriter w = new BufferedWriter(new FileWriter(dependenciesFile))) {
 			for (Artifact cur : project.getArtifacts()) {
 				w.append('/');
 				w.append(DOT.matcher(cur.getGroupId()).replaceAll("/")).append('/');
@@ -63,10 +65,11 @@ public class DependenciesMojo extends AbstractMojo {
 				w.append(cur.getArtifactId()).append('-').append(cur.getVersion()).append('.').append(cur.getArtifactHandler().getExtension()).append('\n');
 			}
 		} catch (Exception e) {
-			throw new MojoExecutionException("unable to write dependencies to: " + dependensiesFile.getAbsolutePath(), e);
+			throw new MojoExecutionException("unable to write dependencies to: " + dependenciesFile.getAbsolutePath(), e);
 		}
 		File scriptFile = new File(script);
 		setupParentDirectory(scriptFile);
+		getLog().info("writing: " + scriptFile.getAbsolutePath());
 		try (OutputStream w = new FileOutputStream(scriptFile); InputStream is = DependenciesMojo.class.getClassLoader().getResourceAsStream("download-dependencies.sh")) {
 			IOUtil.copy(is, w);
 		} catch (Exception e) {

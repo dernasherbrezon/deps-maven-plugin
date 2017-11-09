@@ -14,6 +14,8 @@ if [ ! -f $1/dependencies.txt ]; then
 	exit 1;
 fi
 
+mkdir -p $2
+
 unset REPOSITORIES
 while IFS= read -r; do
     REPOSITORIES+=("$REPLY")
@@ -35,7 +37,7 @@ function downloadFromRepositories {
 		if [ $? -eq 0 ]; then
 			return 0
 		else
-			rm $1
+			rm -f $1
 			echo "trying next repo"
 		fi 
 	done

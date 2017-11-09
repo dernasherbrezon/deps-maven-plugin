@@ -15,6 +15,8 @@ _failed_wget() {
 
 test_success() {
 	testWorkingDir="$workingdir/${FUNCNAME[0]}"
+	#ensure script will create output directory if it doesn't exist
+	outputDir=$testWorkingDir/output
 	mkdir -p "$testWorkingDir"
 	
 	touch "$testWorkingDir/test2.jar"
@@ -24,10 +26,10 @@ test_success() {
 	
 	export -f _wget
 	fake wget _wget 
-	$scriptLocation $testWorkingDir $testWorkingDir
+	$scriptLocation $testWorkingDir $outputDir
 	
-	assert "test -e $testWorkingDir/test.jar"
-	assert "[ ! -f $testWorkingDir/test3.jar ]"
+	assert "test -e $outputDir/test.jar"
+	assert "[ ! -f $outputDir/test3.jar ]"
 }
 
 test_unable_to_download() {
