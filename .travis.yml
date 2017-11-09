@@ -7,7 +7,9 @@ cache:
 
 before_cache:
   - rm -rf $HOME/.m2/repository/com/aerse/
-  
+
+install:
+  - mvn compile
 script:
   - mvn test -B
   - ./src/test/bash/bash_unit.sh ./src/test/bash/test_core.sh
