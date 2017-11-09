@@ -20,7 +20,7 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.IOUtil;
 
-@Mojo(name = "extract", defaultPhase = LifecyclePhase.DEPLOY, threadSafe = false, requiresDependencyCollection = ResolutionScope.COMPILE_PLUS_RUNTIME, requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME)
+@Mojo(name = "extract", defaultPhase = LifecyclePhase.PACKAGE, threadSafe = false, requiresDependencyCollection = ResolutionScope.COMPILE_PLUS_RUNTIME, requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME)
 public class DependenciesMojo extends AbstractMojo {
 
 	private final static Pattern DOT = Pattern.compile("\\.");
@@ -40,6 +40,7 @@ public class DependenciesMojo extends AbstractMojo {
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		File repositoriesFile = new File(repositories);
+		setupParentDirectory(repositoriesFile);
 		try (BufferedWriter w = new BufferedWriter(new FileWriter(repositoriesFile))) {
 			for (ArtifactRepository cur : project.getRemoteArtifactRepositories()) {
 				String url = cur.getUrl();
@@ -52,6 +53,7 @@ public class DependenciesMojo extends AbstractMojo {
 			throw new MojoExecutionException("unable to write repositories to: " + repositoriesFile.getAbsolutePath(), e);
 		}
 		File dependensiesFile = new File(dependencies);
+		setupParentDirectory(dependensiesFile);
 		try (BufferedWriter w = new BufferedWriter(new FileWriter(dependensiesFile))) {
 			for (Artifact cur : project.getArtifacts()) {
 				w.append('/');
@@ -64,10 +66,17 @@ public class DependenciesMojo extends AbstractMojo {
 			throw new MojoExecutionException("unable to write dependencies to: " + dependensiesFile.getAbsolutePath(), e);
 		}
 		File scriptFile = new File(script);
+		setupParentDirectory(scriptFile);
 		try (OutputStream w = new FileOutputStream(scriptFile); InputStream is = DependenciesMojo.class.getClassLoader().getResourceAsStream("download-dependencies.sh")) {
 			IOUtil.copy(is, w);
 		} catch (Exception e) {
 			throw new MojoExecutionException("unable to write script to: " + scriptFile.getAbsolutePath(), e);
+		}
+	}
+
+	private static void setupParentDirectory(File file) {
+		if (!file.getParentFile().exists() && !file.getParentFile().mkdirs()) {
+			throw new RuntimeException("unable to setup parent directory: " + file.getAbsolutePath());
 		}
 	}
 

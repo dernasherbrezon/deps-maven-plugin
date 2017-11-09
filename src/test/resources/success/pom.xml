@@ -1,0 +1,36 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.aerse.maven</groupId>
+	<artifactId>deps-maven-plugin</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>deps-maven-plugin</artifactId>
+				<configuration>
+					<project implementation="com.aerse.maven.util.ProjectStub">
+						<scopeArtifactFilter>compile+runtime</scopeArtifactFilter>
+						<artifactStubs>
+							<dependency>
+								<groupId>junit</groupId>
+								<artifactId>junit</artifactId>
+								<version>4.10</version>
+							</dependency>
+						</artifactStubs>
+						<stubArtifactRepository>
+							<repository>
+								<id>jcenter</id>
+								<url>https://jcenter.bintray.com/</url>
+							</repository>
+						</stubArtifactRepository>
+					</project>
+					<repositories>./target/success/repo.txt</repositories>
+					<dependencies>./target/success/deps.txt</dependencies>
+					<script>./target/success/script.sh</script>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
