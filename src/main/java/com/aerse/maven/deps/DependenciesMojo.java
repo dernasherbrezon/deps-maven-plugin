@@ -6,6 +6,9 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import org.apache.maven.artifact.Artifact;
@@ -18,6 +21,7 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
+import org.apache.maven.shared.artifact.filter.PatternExcludesArtifactFilter;
 import org.codehaus.plexus.util.IOUtil;
 
 @Mojo(name = "extract", defaultPhase = LifecyclePhase.PACKAGE, threadSafe = false, requiresDependencyCollection = ResolutionScope.COMPILE_PLUS_RUNTIME, requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME)
@@ -36,6 +40,9 @@ public class DependenciesMojo extends AbstractMojo {
 
 	@Parameter(defaultValue = "${project.build.directory}/download-dependencies.sh", readonly = true)
 	private String script;
+
+	@Parameter(property = "excludes", required = false)
+	private String[] excludes;
 
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
@@ -56,8 +63,12 @@ public class DependenciesMojo extends AbstractMojo {
 		File dependenciesFile = new File(dependencies);
 		setupParentDirectory(dependenciesFile);
 		getLog().info("writing: " + dependenciesFile.getAbsolutePath());
+		PatternExcludesArtifactFilter filter = new PatternExcludesArtifactFilter(convertToList(excludes), true);
 		try (BufferedWriter w = new BufferedWriter(new FileWriter(dependenciesFile))) {
 			for (Artifact cur : project.getArtifacts()) {
+				if (!filter.include(cur)) {
+					continue;
+				}
 				w.append('/');
 				w.append(DOT.matcher(cur.getGroupId()).replaceAll("/")).append('/');
 				w.append(cur.getArtifactId()).append('/');
@@ -76,6 +87,13 @@ public class DependenciesMojo extends AbstractMojo {
 		} catch (Exception e) {
 			throw new MojoExecutionException("unable to write script to: " + scriptFile.getAbsolutePath(), e);
 		}
+	}
+
+	private static List<String> convertToList(String[] value) {
+		if (value == null) {
+			return Collections.emptyList();
+		}
+		return Arrays.asList(value);
 	}
 
 	private static void setupParentDirectory(File file) {

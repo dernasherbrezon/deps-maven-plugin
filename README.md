@@ -34,6 +34,11 @@ Maven plugin that outputs dependency information suitable for bash script to dow
 			<td>${project.build.directory}/download-dependencies.sh</td>
 			<td>script that could download dependencies from repositories. no maven required.</td>
 		</tr>
+		<tr>
+			<td>excludes</td>
+			<td></td>
+			<td>List of artifacts to exclude. This is very useful to exclude artifacts from the private repositories. The pattern follows <a href="https://maven.apache.org/plugins/maven-assembly-plugin/advanced-descriptor-topics.html">maven assembly plugin</a></td>
+		</tr>
 	</tbody>
 </table>
 
@@ -47,6 +52,9 @@ Maven plugin that outputs dependency information suitable for bash script to dow
 		<repositories>${project.build.directory}/deps/repositories.txt</repositories>
 		<dependencies>${project.build.directory}/deps/dependencies.txt</dependencies>
 		<script>${project.build.directory}/deps/script.sh</script>
+		<excludes>
+			<exclude>com.examples:*:*<exclude>
+		</excludes>
 	</configuration>
 </plugin
 ```

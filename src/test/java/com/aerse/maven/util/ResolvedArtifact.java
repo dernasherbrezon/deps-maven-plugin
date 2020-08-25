@@ -17,4 +17,8 @@ public class ResolvedArtifact extends ArtifactStub {
 		return artifactHandler;
 	}
 
+	@Override
+	public String getId() {
+		return getGroupId() + ":" + getArtifactId() + ":" + getVersion();
+	}
 }
