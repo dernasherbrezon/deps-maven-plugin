@@ -84,7 +84,9 @@ public class DependenciesMojo extends AbstractMojo {
 		getLog().info("writing: " + scriptFile.getAbsolutePath());
 		try (OutputStream w = new FileOutputStream(scriptFile); InputStream is = DependenciesMojo.class.getClassLoader().getResourceAsStream("download-dependencies.sh")) {
 			IOUtil.copy(is, w);
-			scriptFile.setExecutable(true);
+			if (!scriptFile.setExecutable(true)) {
+				getLog().warn("unable to make script executable: " + scriptFile.getAbsolutePath());
+			}
 		} catch (Exception e) {
 			throw new MojoExecutionException("unable to write script to: " + scriptFile.getAbsolutePath(), e);
 		}
