@@ -67,6 +67,7 @@ public class DependenciesMojo extends AbstractMojo {
 		try (BufferedWriter w = new BufferedWriter(new FileWriter(dependenciesFile))) {
 			for (Artifact cur : project.getArtifacts()) {
 				if (!filter.include(cur)) {
+					getLog().info("excluding: " + cur.getId());
 					continue;
 				}
 				w.append('/');
