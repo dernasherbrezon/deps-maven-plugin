@@ -1,10 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.aerse.maven</groupId>
 	<artifactId>deps-maven-plugin</artifactId>
-	<version>1.2-SNAPSHOT</version>
+	<version>1.2</version>
 	<packaging>maven-plugin</packaging>
 	<name>deps</name>
 	<description>extract project dependencies and download them later using bash</description>
@@ -134,7 +132,7 @@
 		<url>https://github.com/dernasherbrezon/deps-maven-plugin</url>
 		<connection>scm:git:git@github.com/dernasherbrezon/deps-maven-plugin.git</connection>
 		<developerConnection>scm:git:https://github.com/dernasherbrezon/deps-maven-plugin.git</developerConnection>
-		<tag>HEAD</tag>
+		<tag>deps-maven-plugin-1.2</tag>
 	</scm>
 
 	<issueManagement>
