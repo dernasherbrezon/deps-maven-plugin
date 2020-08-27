@@ -27,7 +27,7 @@ import org.codehaus.plexus.util.IOUtil;
 @Mojo(name = "extract", defaultPhase = LifecyclePhase.PACKAGE, threadSafe = false, requiresDependencyCollection = ResolutionScope.COMPILE_PLUS_RUNTIME, requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME)
 public class DependenciesMojo extends AbstractMojo {
 
-	private final static Pattern DOT = Pattern.compile("\\.");
+	private static final Pattern DOT = Pattern.compile("\\.");
 
 	@Parameter(defaultValue = "${project}", readonly = true, required = true)
 	private MavenProject project;
@@ -99,9 +99,9 @@ public class DependenciesMojo extends AbstractMojo {
 		return Arrays.asList(value);
 	}
 
-	private static void setupParentDirectory(File file) {
+	private static void setupParentDirectory(File file) throws MojoFailureException {
 		if (!file.getParentFile().exists() && !file.getParentFile().mkdirs()) {
-			throw new RuntimeException("unable to setup parent directory: " + file.getAbsolutePath());
+			throw new MojoFailureException("unable to setup parent directory: " + file.getAbsolutePath());
 		}
 	}
 
