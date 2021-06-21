@@ -1,4 +1,4 @@
-# deps-maven-plugin [![Build Status](https://travis-ci.org/dernasherbrezon/deps-maven-plugin.svg?branch=master)](https://travis-ci.org/dernasherbrezon/deps-maven-plugin) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=com.aerse.maven%3Adeps-maven-plugin&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.aerse.maven%3Adeps-maven-plugin)
+# deps-maven-plugin [![Build Status](https://travis-ci.com/dernasherbrezon/deps-maven-plugin.svg?branch=master)](https://travis-ci.com/dernasherbrezon/deps-maven-plugin) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=com.aerse.maven%3Adeps-maven-plugin&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.aerse.maven%3Adeps-maven-plugin)
 
 Maven plugin that outputs dependency information suitable for bash script to download. This is reasonable tradeoff between creating fat jar and installing full jdk, maven with ton of dependencies.
 
