@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.aerse.maven</groupId>
 	<artifactId>deps-maven-plugin</artifactId>
-	<version>1.3</version>
+	<version>1.4-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
 	<name>deps</name>
 	<description>extract project dependencies and download them later using bash</description>
@@ -130,7 +130,7 @@
 	<scm>
 		<url>https://github.com/dernasherbrezon/deps-maven-plugin</url>
 		<connection>scm:git:git@github.com/dernasherbrezon/deps-maven-plugin.git</connection>
-		<developerConnection>scm:git:https://github.com/dernasherbrezon/deps-maven-plugin.git</developerConnection>
+		<developerConnection>scm:git:git@github.com:dernasherbrezon/deps-maven-plugin.git</developerConnection>
 		<tag>deps-maven-plugin-1.3</tag>
 	</scm>
 
