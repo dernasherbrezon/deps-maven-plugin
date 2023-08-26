@@ -18,14 +18,8 @@
 		<dependency>
 			<groupId>org.apache.maven.plugin-tools</groupId>
 			<artifactId>maven-plugin-annotations</artifactId>
-			<version>3.5</version>
-			<scope>provided</scope>
-			<exclusions>
-				<exclusion>
-					<artifactId>maven-artifact</artifactId>
-					<groupId>org.apache.maven</groupId>
-				</exclusion>
-			</exclusions>
+			<version>${maven-version}</version>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
@@ -36,7 +30,7 @@
 		<dependency>
 			<groupId>org.apache.maven.plugin-testing</groupId>
 			<artifactId>maven-plugin-testing-harness</artifactId>
-			<version>2.1</version>
+			<version>3.3.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -48,9 +42,14 @@
 		<dependency>
 			<groupId>org.apache.maven.shared</groupId>
 			<artifactId>maven-common-artifact-filters</artifactId>
-			<version>3.1.0</version>
+			<version>3.3.2</version>
 		</dependency>
-
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13.1</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
